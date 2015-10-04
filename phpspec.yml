@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Unicorn
+        psr4_prefix: Unicorn
+        src_path: app

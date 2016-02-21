@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'HomeController@index');
+
+Route::group(['prefix' => 'store', 'as' => 'store::'], function() {
+	Route::get('/', 'StoreController@index')->name('index');
+	Route::get('/browse', 'StoreController@browse')->name('browse');
+	Route::get('/details/{id}', 'StoreController@show')->name('show')->where('id', '[0-9]+');
 });

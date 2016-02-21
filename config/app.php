@@ -144,7 +144,7 @@ return [
         Unicorn\Providers\AuthServiceProvider::class,
         Unicorn\Providers\EventServiceProvider::class,
         Unicorn\Providers\RouteServiceProvider::class,
-
+        Unicorn\Providers\ComposerServiceProvider::class
     ],
 
     /*

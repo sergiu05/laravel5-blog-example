@@ -6,25 +6,33 @@ use Illuminate\Http\Request;
 use Unicorn\Http\Requests;
 use Unicorn\Http\Controllers\Controller;
 use Unicorn\Repositories\GenreRepository;
+use Unicorn\Repositories\AlbumRepository;
 
 class StoreController extends Controller
 {
     /**
-     * The album repository implementation
+     * The genre repository implementation
      *
      * @var GenreRepository
      */
     protected $genres;
+
+    /**
+     * The album repository implementation
+     *
+     * @var AlbumRepository
+     */
+    protected $albums;
 
     /*
      * A new instance of StoreController
      *
      * @return void
      */
-    public function __construct(GenreRepository $genres) {
+    public function __construct(GenreRepository $genres, AlbumRepository $albums) {
 
         $this->genres = $genres;
-
+        $this->albums = $albums;
     }
 
     /**
@@ -64,8 +72,10 @@ class StoreController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
+
+        $album = $this->albums->findById($id);
         
-        return view('frontend.store-details');
+        return view('frontend.store-details', compact('album'));
 
     }
 

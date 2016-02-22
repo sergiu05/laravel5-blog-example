@@ -20,6 +20,17 @@ class Album extends Model
     */
     protected $fillable = ['title', 'price', 'image', 'genre_id', 'artist_id'];
 
+     /**
+     * Get the albums's price in dollars (in db is stored in cents).
+     *
+     * @param  integer  $value
+     * @return float
+     */
+    public function getPriceAttribute($value)
+    {
+        return round($value / 100, 2);
+    }
+
     /**
     * Get the artist that owns the album    
     */

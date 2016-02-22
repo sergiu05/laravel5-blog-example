@@ -3,25 +3,18 @@
 namespace Unicorn\Repositories;
 
 use Unicorn\Album;
-use DB;
 
 class AlbumRepository {
 
 	/**
-	 * Get all the albums of a gender
+	 * Get album by id 
 	 *
-	 * @param string
-	 * @return collection
+	 * @param integer $id
+	 * @return Model Instance
 	 */
-	public function forGenre($genre) {
-		//dd($genre);
-		//$albums = DB::table('albums')->get();
-		//$gender = 
-		//$albums = Album::with(['genre' => function($query) use ($genre) {
-		//	$query->where('genres.name', '=', $genre);
-		//}])->get();
-
-		//dd($albums);
+	public function findById($id) {
+		
+		return Album::with('genre')->findOrFail($id);
 
 	}
 }

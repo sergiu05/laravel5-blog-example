@@ -20,16 +20,16 @@
 <div class="row">
     <div class="col-sm-8">
         <h2>What We Do</h2>
-        <p>Introduce the visitor to the business using clear, informative text. Use well-targeted keywords within your sentences to make sure search engines can find the business.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et molestiae similique eligendi reiciendis sunt distinctio odit? Quia, neque, ipsa, adipisci quisquam ullam deserunt accusantium illo iste exercitationem nemo voluptates asperiores.</p>
+        <p>Online shopping from a great selection at CDs &amp; Vinyl Store.</p>
+        <p>Get the latest CDs and exclusive music offers at BestBuy.com. Shop for music CDs, vinyl records, Blu-ray discs and music DVDs from the best new artists.</p>
         <p>
-            <a class="btn btn-default btn-lg" href="#">Call to Action &raquo;</a>
+            <a class="btn btn-default btn-lg" href="{{ action('StoreController@index') }}">See our collection &raquo;</a>
         </p>
     </div>
     <div class="col-sm-4">
         <h2>Contact Us</h2>
         <address>
-            <strong>Start Bootstrap</strong>
+            <strong>CD Music</strong>
             <br>3481 Melrose Place
             <br>Beverly Hills, CA 90210
             <br>

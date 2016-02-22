@@ -42,13 +42,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
+                <a class="navbar-brand" href="{{ url('/') }}">Home Page</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">About</a>
+                        <a href="{{ url('/store') }}">Store</a>
                     </li>
                     <li>
                         <a href="#">Services</a>
@@ -68,7 +68,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="tagline">Business Name or Tagline</h1>
+                    <h1 class="tagline">CDs: Music CDs - Best Buy</h1>
                 </div>
             </div>
         </div>
@@ -84,7 +84,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
+                    <p>Copyright &copy; {{ date('Y') }}</p>
                 </div>
             </div>
         </footer>

@@ -20,7 +20,7 @@
         <div class="list-group">
             {{--  $genres is defined in ViewComposers/StoreComposer.php --}}
             @foreach($genres as $genre)
-            <a href="#" class="list-group-item @if ($album->genre->id == $genre->id) active @endif">{{ $genre->name }}</a>
+            <a href="{{ route('store::browse').'?genre='.$genre->name }}" class="list-group-item @if ($album->genre->id == $genre->id) active @endif">{{ $genre->name }}</a>
             @endforeach            
         </div>
     </div>

@@ -29,5 +29,6 @@ class Kernel extends HttpKernel
         'auth' => \Unicorn\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \Unicorn\Http\Middleware\RedirectIfAuthenticated::class,
+        'admin' => \Unicorn\Http\Middleware\AdminMiddleware::class
     ];
 }

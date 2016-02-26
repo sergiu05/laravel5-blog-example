@@ -19,8 +19,14 @@ Route::group(['prefix' => 'store', 'as' => 'store::'], function() {
 	Route::get('/details/{id}', 'StoreController@show')->name('show')->where('id', '[0-9]+');
 });
 
-Route::group(['prefix' => 'admin', 'as' => 'admin::'], function() {
+Route::group([
+		'prefix' => 'admin', 
+		'as' => 'admin::', 
+		'middleware' => ['auth', 'admin']
+	], function() {
+	Route::get('/', 'StoreManagerController@welcome')->name('dashboard');
 	Route::resource('albums', 'StoreManagerController');
+	Route::resource('genres', 'StoreManagerGenreController');
 });
 
 # authentication routes

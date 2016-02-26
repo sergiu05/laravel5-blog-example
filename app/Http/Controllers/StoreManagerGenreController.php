@@ -6,20 +6,8 @@ use Illuminate\Http\Request;
 use Unicorn\Http\Requests;
 use Unicorn\Http\Controllers\Controller;
 
-class StoreManagerController extends Controller
+class StoreManagerGenreController extends Controller
 {
-	/**
-	 * Display welcome dashboard page
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function welcome() {
-
-		return view('backend/dashboard');
-
-	}
-
-
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +15,7 @@ class StoreManagerController extends Controller
      */
     public function index()
     {
-        return view('backend/dashboard');
+        //
     }
 
     /**

@@ -25,7 +25,7 @@
         </div>
         <!-- /.row -->
 
-        @foreach($genres as $genre)
+        @forelse($genres as $genre)
         <div class="row">
         	 
             <div class="col-md-7">
@@ -43,7 +43,12 @@
         </div>
         <!-- /.row -->
         <hr>
-        @endforeach
+        @empty
+        <div class="alert alert-info" role="alert">
+        	<p>There are no music genders defined for now! Please contact the admin to upload some of them.</p>	
+        </div>
+        
+        @endforelse
 
         
 @endsection

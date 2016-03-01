@@ -11,10 +11,13 @@ class GenreRepository {
      *
      * @return Collection
      */
-	public function all() {
+	public function all($eager = false) {
 
-		return Genre::all();
-
+		if ( ! $eager) {
+			return Genre::all();	
+		}
+		
+		return Genre::with('albums')->get();
 	}
 
 	public function getAlbumsFor($genre) {

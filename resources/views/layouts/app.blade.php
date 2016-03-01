@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>@yield('title')</title>
-
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <!-- Bootstrap Core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 
@@ -64,6 +64,9 @@
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
                       <ul class="dropdown-menu">
                         <li><a href="#">My Profile</a></li>
+                        @if (Auth::user()->isAdmin())
+                        <li><a href="{{ route('admin::dashboard') }}">Dashboard</a></li>
+                        @endif
                         <li><a href="{{ route('logout') }}">Logout</a></li>                        
                       </ul>
                     </li>

@@ -6,8 +6,27 @@ use Illuminate\Http\Request;
 use Unicorn\Http\Requests;
 use Unicorn\Http\Controllers\Controller;
 
+use Unicorn\Repositories\GenreRepository;
+
 class StoreManagerGenreController extends Controller
 {
+    /**
+     * The genre repository
+     *
+     * @var GenreRepository
+     */
+    protected $genres;
+
+    /**
+     * Get an instance of StoreManagerGenreController
+     *
+     * @param GenreRepository $genres
+     * @return void
+     */
+    public function __construct(GenreRepository $genres) {
+        $this->genres = $genres;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +34,9 @@ class StoreManagerGenreController extends Controller
      */
     public function index()
     {
-        //
+        return view('backend.genres.index', [
+            'genres' => $this->genres->all(true)
+        ]);
     }
 
     /**

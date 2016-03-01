@@ -145,7 +145,7 @@ return [
         Unicorn\Providers\EventServiceProvider::class,
         Unicorn\Providers\RouteServiceProvider::class,
         Unicorn\Providers\ComposerServiceProvider::class,
-        
+        Socieboy\Alerts\AlertServiceProvider::class
     ],
 
     /*

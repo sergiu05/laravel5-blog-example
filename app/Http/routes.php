@@ -11,22 +11,34 @@
 |
 */
 
+#homepage route
 Route::get('/', 'HomeController@index')->name('home');
 
+#website routes
 Route::group(['prefix' => 'store', 'as' => 'store::'], function() {
 	Route::get('/', 'StoreController@index')->name('index');
 	Route::get('/browse', 'StoreController@browse')->name('browse');
 	Route::get('/details/{id}', 'StoreController@show')->name('show')->where('id', '[0-9]+');
 });
 
+#dashboard routes
 Route::group([
-		'prefix' => 'admin', 
-		'as' => 'admin::', 
+		'prefix' => 'admin', 		
 		'middleware' => ['auth', 'admin']
 	], function() {
+
+	# admin albums routes	
 	Route::get('/', 'StoreManagerController@welcome')->name('dashboard');
-	Route::resource('albums', 'StoreManagerController');
-	Route::resource('genres', 'StoreManagerGenreController');
+	Route::resource('albums', 'StoreManagerController', ['except' => ['show']]);
+	
+	# admin genres routes
+	Route::get('/genres', 'StoreManagerGenreController@index');
+	Route::get('/genres/show/{genrename}', 'StoreManagerGenreController@show')->name('admin.genres.show');
+	Route::post('/genres', 'StoreManagerGenreController@store');	
+	Route::delete('/genres/{genre}', 'StoreManagerGenreController@destroy'); /* route model binding */
+	
+	#admin artists routes
+	Route::resource('artists', 'StoreManagerArtistController');
 });
 
 # authentication routes

@@ -6,8 +6,41 @@ use Illuminate\Http\Request;
 use Unicorn\Http\Requests;
 use Unicorn\Http\Controllers\Controller;
 
+use Unicorn\Repositories\AlbumRepository;
+use Unicorn\Repositories\ArtistRepository;
+use Unicorn\Http\Requests\AlbumCreateRequest;
+
+use Unicorn\Services\UploadsManager;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 class StoreManagerController extends Controller
 {
+	/**
+	 * The albums repository instance
+	 *
+	 * @var AlbumRepository
+	 */
+	protected $albums;
+
+	/*
+	 * The artists repository instance
+	 *
+	 * @var ArtistRepository
+	 */
+
+	/**
+	 * Create a new controller instance
+	 *
+	 * @param AlbumRepository $albums
+	 * @return void
+	 */
+	public function __construct(AlbumRepository $albums, ArtistRepository $artists) {
+
+		$this->albums = $albums;
+		$this->artists = $artists;
+
+	}
+
 	/**
 	 * Display welcome dashboard page
 	 *
@@ -15,7 +48,7 @@ class StoreManagerController extends Controller
 	 */
 	public function welcome() {
 
-		return view('backend/dashboard');
+		return view('backend.dashboard');
 
 	}
 
@@ -27,7 +60,9 @@ class StoreManagerController extends Controller
      */
     public function index()
     {
-        return view('backend/dashboard');
+    	return view('backend.albums.index', [
+    		'albums' => $this->albums->all()
+    	]);
     }
 
     /**
@@ -37,7 +72,8 @@ class StoreManagerController extends Controller
      */
     public function create()
     {
-        //
+    	$artists = $this->artists->all();
+        return view('backend.albums.create', compact('artists'));
     }
 
     /**
@@ -46,21 +82,24 @@ class StoreManagerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(AlbumCreateRequest $request, UploadsManager $manager)
+    {   	
+    	dd($request);
+    	$image_name = $manager->uploadFile($request->file('image'));
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    	$album = $this->albums->create([
+    		'title' => $request->input('title'),
+    		'price' => $request->input('price'),
+    		'image' => $image_name,
+    		'genre_id' => $request->input('genre'),
+    		'artist_id' => $request->input('artist'),
+    		'description' => $request->input('description')
+    	]);    	        
+
+    	alert()->overlay('Success', 'A new album with id of ' . $album->id .' has been created.', "success");
+
+        return redirect()->route('admin.albums.index');
+    }    
 
     /**
      * Show the form for editing the specified resource.
@@ -70,7 +109,11 @@ class StoreManagerController extends Controller
      */
     public function edit($id)
     {
-        //
+        if ( ! $album = $this->albums->findById($id)) {
+        	throw new NotFoundHttpException('url not found'); 
+        }
+        $artists = $this->artists->all();
+        return view('backend.albums.edit', compact('album', 'artists'));
     }
 
     /**
@@ -80,19 +123,32 @@ class StoreManagerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AlbumCreateRequest $request, $id)
     {
-        //
+        $album = $this->albums->update([
+        	'id' => $id,
+        	'title' => $request->title,
+        	'price' => $request->price,
+        	'genre_id' => $request->genre,
+        	'artist_id' => $request->artist,
+        	'description' => $request->description
+        ]);
+
+        if ($album) {
+        	alert()->overlay('Success', 'The album ' . $request->title . ' was updated.', "success");
+        }
+
+        return redirect()->route('admin.albums.index'); 
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return int
      */
     public function destroy($id)
     {
-        //
+        return $this->albums->delete($id);        
     }
 }

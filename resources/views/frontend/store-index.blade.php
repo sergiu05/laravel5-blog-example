@@ -46,8 +46,7 @@
         @empty
         <div class="alert alert-info" role="alert">
         	<p>There are no music genders defined for now! Please contact the admin to upload some of them.</p>	
-        </div>
-        
+        </div>        
         @endforelse
 
         

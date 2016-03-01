@@ -4,5 +4,6 @@
 .env
 /vendor
 /node_modules
+/public/images
 Homestead.yaml
 Homestead.json

@@ -37,6 +37,7 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
 
+
     /**
      * Is the current User admin?
      *

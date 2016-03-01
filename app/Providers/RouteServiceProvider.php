@@ -25,7 +25,10 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         //
-
+    	//$router->model('genre', 'Unicorn\Genre');
+    	$router->bind('genre', function($id) {
+    		return \Unicorn\Genre::with('albums')->where('id', $id)->first();
+    	});
         parent::boot($router);
     }
 

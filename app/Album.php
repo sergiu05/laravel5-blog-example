@@ -18,7 +18,7 @@ class Album extends Model
     *
     * @var array
     */
-    protected $fillable = ['title', 'price', 'image', 'genre_id', 'artist_id'];
+    protected $fillable = ['title', 'price', 'image', 'genre_id', 'artist_id', 'description'];
 
      /**
      * Get the albums's price in dollars (in db is stored in cents).
@@ -29,6 +29,18 @@ class Album extends Model
     public function getPriceAttribute($value)
     {
         return round($value / 100, 2);
+    }
+
+    /*
+     * Set the album's price in cents
+     *
+     * @param float number
+     * @return int
+     */
+    public function setPriceAttribute($value) {
+
+    	$this->attributes['price'] = round($value, 2) * 100;
+    	
     }
 
     /**

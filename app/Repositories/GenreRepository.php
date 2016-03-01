@@ -11,6 +11,7 @@ class GenreRepository {
      *
      * @return Collection
      */
+
 	public function all($eager = false) {
 
 		if ( ! $eager) {
@@ -23,6 +24,18 @@ class GenreRepository {
 	public function getAlbumsFor($genre) {
 
 		return Genre::with('albums')->where('name', $genre)->first();		
+
+	}
+
+	/**
+	 * Save a new model and return the instance
+	 *
+	 * @param array Attributes
+	 * @return Genre model instance
+	 */
+	public function create(array $data) {
+
+		return Genre::create($data);
 
 	}
 

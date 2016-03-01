@@ -14,7 +14,8 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer(
-            'frontend/store*', 'Unicorn\Http\ViewComposers\StoreComposer'
+            ['frontend/store*', 'backend/albums*'], 
+            'Unicorn\Http\ViewComposers\StoreComposer'
         );
     }
 

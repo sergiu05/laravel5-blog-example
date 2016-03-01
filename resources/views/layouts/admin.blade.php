@@ -7,6 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="_token" content="{{ csrf_token() }}">
   <title>@yield('title')</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -24,6 +25,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   -->
   <link rel="stylesheet" href="/bower_components/admin-lte/dist/css/skins/skin-blue.min.css">
 
+  <link rel="stylesheet" type="text/css" href="/css/sweetalert.css">
+
+  @section('styles')
+
+  @show
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -36,20 +43,20 @@ BODY TAG OPTIONS:
 =================
 Apply one or more of the following classes to get the
 desired effect
-|---------------------------------------------------------|
+|
 | SKINS         | skin-blue                               |
 |               | skin-black                              |
 |               | skin-purple                             |
 |               | skin-yellow                             |
 |               | skin-red                                |
 |               | skin-green                              |
-|---------------------------------------------------------|
+||
 |LAYOUT OPTIONS | fixed                                   |
 |               | layout-boxed                            |
 |               | layout-top-nav                          |
 |               | sidebar-collapse                        |
 |               | sidebar-mini                            |
-|---------------------------------------------------------|
+|  														  |
 -->
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -253,12 +260,12 @@ desired effect
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
-      <ul class="sidebar-menu">
+      <ul class="sidebar-menu {{ Request::url() }}">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="{{ url('admin/genres') }}"><i class="fa fa-link"></i> <span>Genre</span></a></li>
-        <li><a href="{{ url('/admin/albums') }}"><i class="fa fa-link"></i> <span>Albums</span></a></li>
-        <li class="treeview">
+        <li @if (Request::is('admin/genre*')) class="active" @endif><a href="{{ url('admin/genres') }}"><i class="fa fa-link"></i> <span>Genre</span></a></li>
+        <li @if (Request::is('admin/albums*')) class="active" @endif><a href="{{ url('/admin/albums') }}"><i class="fa fa-link"></i> <span>Albums</span></a></li>
+        <li @if (Request::is('admin/users*')) class="active" @endif class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>User</span> <i class="fa fa-angle-left pull-right"></i></a>
           <ul class="treeview-menu">
             <li><a href="#">Link in level 2</a></li>
@@ -392,9 +399,22 @@ desired effect
 <!-- AdminLTE App -->
 <script src="/bower_components/admin-lte/dist/js/app.min.js"></script>
 
+<script src="/js/sweetalert.js"></script>
+
+<script>
+	$.ajaxSetup({
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') }
+    });
+</script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. Slimscroll is required when using the
      fixed layout. -->
+@include('Alerts::show')
+
+@section('scripts')
+
+@show
 </body>
 </html>

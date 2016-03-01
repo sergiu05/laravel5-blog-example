@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'Unicorn\Model' => 'Unicorn\Policies\ModelPolicy',
+        'Unicorn\Genre' => 'Unicorn\Policies\GenrePolicy',
     ];
 
     /**

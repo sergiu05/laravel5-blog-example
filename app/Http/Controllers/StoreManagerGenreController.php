@@ -5,7 +5,7 @@ namespace Unicorn\Http\Controllers;
 use Illuminate\Http\Request;
 use Unicorn\Http\Requests;
 use Unicorn\Http\Controllers\Controller;
-use Unicorn\Repositories\GenreRepository;
+
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Unicorn\Genre;
@@ -33,24 +33,7 @@ class StoreManagerGenreController extends Controller
 
 		$this->genres = $genres;
 
-	}
-
-    /**
-     * The genre repository
-     *
-     * @var GenreRepository
-     */
-    protected $genres;
-
-    /**
-     * Get an instance of StoreManagerGenreController
-     *
-     * @param GenreRepository $genres
-     * @return void
-     */
-    public function __construct(GenreRepository $genres) {
-        $this->genres = $genres;
-    }
+	}    
 
     /**
      * Display a listing of the resource.

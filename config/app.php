@@ -145,7 +145,8 @@ return [
         Unicorn\Providers\EventServiceProvider::class,
         Unicorn\Providers\RouteServiceProvider::class,
         Unicorn\Providers\ComposerServiceProvider::class,
-        Socieboy\Alerts\AlertServiceProvider::class
+        Socieboy\Alerts\AlertServiceProvider::class,
+        Unicorn\Providers\CartServiceProvider::class
     ],
 
     /*
@@ -194,7 +195,7 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-
+        'Cart'		=> Unicorn\Facades\Cart::class
     ],
 
 ];

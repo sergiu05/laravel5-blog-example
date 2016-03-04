@@ -13,6 +13,9 @@ use Unicorn\Http\Requests\AlbumCreateRequest;
 use Unicorn\Services\UploadsManager;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+use Cart;
+use Session;
+
 class StoreManagerController extends Controller
 {
 	/**
@@ -48,7 +51,29 @@ class StoreManagerController extends Controller
 	 */
 	public function welcome() {
 
-		return view('backend.dashboard');
+		//session()->push(config('music-store.cart.session_key'), ['album_id' => 18, 'qty' => 1]);
+		//session()->forget(config('music-store.cart.session_key'));
+		$session = collect(session()->get(config('music-store.cart.session_key')));
+		
+		$album_id = 18;
+		$qty = 9;
+
+		var_dump($session->contains('album_id', $album_id));
+
+		$newcollection = $session->map(function($album) use ($album_id, $qty){
+			if ($album['album_id'] == $album_id) {
+				$album['qty'] = $qty;
+			}
+			return $album;
+		});
+
+		var_dump($newcollection->toArray());
+
+		session()->put(config('music-store.cart.session_key'), $newcollection->toArray());
+		
+		$session = collect(session()->get(config('music-store.cart.session_key')));
+		
+		return view('backend.dashboard', compact('session'));
 
 	}
 

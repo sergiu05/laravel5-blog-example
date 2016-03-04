@@ -65,7 +65,7 @@
                       <ul class="dropdown-menu">
                         <li><a href="#">My Profile</a></li>
                         @if (Auth::user()->isAdmin())
-                        <li><a href="{{ route('admin::dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
                         @endif
                         <li><a href="{{ route('logout') }}">Logout</a></li>                        
                       </ul>

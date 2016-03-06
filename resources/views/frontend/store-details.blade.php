@@ -5,6 +5,18 @@
 @section('styles')
     <!-- Custom CSS -->
     <link href="/css/shop-item.css" rel="stylesheet">
+    <style>
+    .button-wrapper { padding-left: 10px; padding-right: 10px; padding-bottom: 10px; text-align: right; }
+    .btn.primary {  
+        background-color: #0064cd;
+        background-image: linear-gradient(#049cdb, #0064cd);
+        background-repeat: repeat-x;
+        border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+        color: #fff;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); 
+        font-weight: bold;
+    }
+    </style>
 @endsection
 
 @section('intro')
@@ -45,6 +57,11 @@
                     <span class="glyphicon glyphicon-star-empty"></span>
                     4.0 stars
                 </p>
+            </div>
+            <div class="button-wrapper">
+                <button id="addToCart" type="button" class="btn primary">
+                    Add To Cart
+                </button>
             </div>
         </div>
 
@@ -106,4 +123,25 @@
 
 </div>
 
+@endsection
+
+@section('scripts')
+<script>
+
+$('#addToCart').on('click', function() {
+
+    jQuery.ajax({
+        type: "post",
+        url: "{{ route('addToCart', ['id' => $album->id]) }}",
+        dataType: "json"
+    }).done(function(json) {
+        $('#items').html(json.count);
+        swal('Sucess', 'You added the product to the cart', 'success');
+    }).fail(function(json) {
+        swal('Error', 'Unexpected error', 'error');        
+    });
+
+});
+
+</script>
 @endsection

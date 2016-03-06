@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="_token" content="{{ csrf_token() }}">
 
     <title>@yield('title')</title>
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
@@ -19,7 +20,7 @@
     <link href="/css/custom.css" rel="stylesheet">
     @show
 
-
+    <link rel="stylesheet" type="text/css" href="/css/sweetalert.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -59,6 +60,9 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li>                       
+                        <a class="btn" href="{{ route('checkout') }}"><span class="glyphicon glyphicon-shopping-cart"></span> <span id="items" class="items">{{ Cart::getCount() }}</span></a>  
+                    </li>
                     @if (Auth::check())                    
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
@@ -115,6 +119,20 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/js/bootstrap.min.js"></script>
+
+    <script src="/js/sweetalert.js"></script>
+
+    @include('Alerts::show')
+
+    <script>
+    $.ajaxSetup({
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') }
+    });
+    </script>
+
+    @section('scripts')
+
+    @show
 
 </body>
 

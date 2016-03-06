@@ -9,12 +9,16 @@ class AlbumRepository {
 	/**
 	 * Get album by id 
 	 *
-	 * @param integer $id
-	 * @return Model Instance
+	 * @param integer|array $id
+	 * @param boolean $eagerLoading
+	 * @return Model Instance | Collection
 	 */
-	public function findById($id) {
+	public function findById($id, $eagerLoading = true) {
 		
-		return Album::with('genre', 'artist')->findOrFail($id);
+		if ($eagerLoading) {
+			return Album::with('genre', 'artist')->find($id);	
+		}
+		return Album::find($id);
 
 	}
 

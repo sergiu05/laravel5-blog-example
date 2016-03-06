@@ -7,6 +7,7 @@ use Unicorn\Http\Requests;
 use Unicorn\Http\Controllers\Controller;
 use Unicorn\Repositories\GenreRepository;
 use Unicorn\Repositories\AlbumRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class StoreController extends Controller
 {
@@ -73,9 +74,10 @@ class StoreController extends Controller
      */
     public function show($id) {
 
-        $album = $this->albums->findById($id);
-        
-        return view('frontend.store-details', compact('album'));
+        if ($album = $this->albums->findById($id)) {
+            return view('frontend.store-details', compact('album'));   
+        }
+        abort(404, 'Requested URL was not founded');
 
     }
 

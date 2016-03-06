@@ -30,6 +30,7 @@ class StoreManagerController extends Controller
 	 *
 	 * @var ArtistRepository
 	 */
+    protected $artists;
 
 	/**
 	 * Create a new controller instance

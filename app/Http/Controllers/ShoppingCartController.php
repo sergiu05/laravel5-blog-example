@@ -7,8 +7,30 @@ use Illuminate\Http\Request;
 use Unicorn\Http\Requests;
 use Unicorn\Http\Controllers\Controller;
 
+use Cart;
+use Unicorn\Repositories\AlbumRepository;
+
 class ShoppingCartController extends Controller
 {
+    /**
+     * The album repository instance
+     *
+     * @var AlbumRepository
+     */
+    protected $albums;
+
+    /**
+     * Create a new controller instance
+     *
+     * @param AlbumRepository $albums
+     * @return void
+     */
+    public function __construct(AlbumRepository $albums) {
+
+        $this->albums = $albums;
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +38,25 @@ class ShoppingCartController extends Controller
      */
     public function index()
     {
-        //
+        //Cart::emptyCart();
+        //Cart::addToCart(4, 5);
+        //Cart::addToCart(6, 2);
+        $cartTotal = 0;
+
+        $cartItems = Cart::getCartItems()->map(function($item, $key) use (&$cartTotal) {
+            $album = $this->albums->findById($item['album_id']);
+            //dd($album);
+            $item['album_name'] = $album->title;
+            $item['artist_name'] = $album->artist->name;
+            $item['price'] = $album->price;
+            $item['image'] = $album->image;
+            $cartTotal += $item['qty'] * $item['price'];
+
+            return $item;
+        });
+        
+        
+        return view('frontend.checkout', compact('cartItems', 'cartTotal'));
     }
 
     /**
@@ -44,11 +84,15 @@ class ShoppingCartController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array JSON
      */
-    public function show($id)
+    public function addToCart($id)
     {
-        //
+        if ($this->albums->findById($id)) {
+            Cart::addToCart($id, 1);
+            return response()->json(['count' => Cart::getCount()]);
+        }
+        abort(404, 'Requested URL was not founded');
     }
 
     /**
@@ -64,24 +108,31 @@ class ShoppingCartController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     *     
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateCart($id, $qty)
     {
-        //
+        if ($this->albums->findById($id)) {
+            Cart::updateCart($id, $qty, false);
+            return response()->json(['count' => Cart::getCount()]);
+        }
+        abort(404, 'Requested URL was not found');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array JSON
      */
-    public function destroy($id)
+    public function removeFromCart($id)
     {
-        //
+        if ($this->albums->findById($id)) {
+            Cart::removeFromCart($id);
+            return response()->json(['count' => Cart::getCount()]);
+        }
+        abort(404, 'Requested URL was not found');
     }
 }

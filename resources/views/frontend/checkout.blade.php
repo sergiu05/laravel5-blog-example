@@ -76,7 +76,7 @@ table th:last-child { min-width: 190px; }
 	                    <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
 	                </a></td>
 	                <td>
-	                <button type="button" class="btn btn-success">
+	                <button type="button" class="btn btn-success place-order-button">
 	                    Place order <span class="glyphicon glyphicon-play"></span>
 	                </button></td>
 	            </tr>
@@ -120,7 +120,7 @@ table th:last-child { min-width: 190px; }
 				swal('Error', 'Unexpected error', 'error');        
 			});
 
-		} else {
+		} else if ($this.hasClass('update-button')) {
 
 			url = "/updatecart/" + $this.data('id') + '/' + $('#item-' + $this.data('id')).val();			
 			$.ajax({
@@ -140,6 +140,24 @@ table th:last-child { min-width: 190px; }
 				swal('Error', 'Unexpected error', 'error');        
 			});
 			
+		} else if ($this.hasClass('place-order-button')) {
+
+			$.ajax({
+				type: 'post',
+				url: '/process',
+				dataType: 'json'
+			}).done(function(json) {
+				swal({
+					title: "Success",
+					text: "Your order has been placed",
+					type: "success"
+				}, function() {
+					location.href="/";
+				});
+			}).fail(function() {
+				swal('Error', 'Could not process order.', 'error');
+			});
+			 
 		}
 	});
 </script>

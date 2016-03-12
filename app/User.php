@@ -48,4 +48,15 @@ class User extends Model implements AuthenticatableContract,
         return (1 == $this->is_admin);
 
     }
+
+    /**
+     * Get the user's orders
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function orders() {
+
+        return $this->hasMany('Unicorn\Order');
+
+    }
 }

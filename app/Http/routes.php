@@ -25,6 +25,7 @@ Route::get('/checkout', 'ShoppingCartController@index')->middleware('auth')->nam
 Route::post('/addtocart/{id}', 'ShoppingCartController@addToCart')->name('addToCart')->where('id', '[0-9]+');
 Route::post('/removefromcart/{id}', 'ShoppingCartController@removeFromCart')->name('removeFromCart')->where('id', '[0-9]+');
 Route::post('/updatecart/{id}/{qty}', 'ShoppingCartController@updateCart')->name('updateCart')->where('id', '[0-9]+')->where('qty', '[0-9]+');
+Route::post('/process', 'CheckoutController@process')->name('process');
 
 #dashboard routes
 Route::group([

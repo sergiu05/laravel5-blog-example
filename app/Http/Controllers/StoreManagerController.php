@@ -68,8 +68,6 @@ class StoreManagerController extends Controller
 			return $album;
 		});
 
-		var_dump($newcollection->toArray());
-
 		session()->put(config('music-store.cart.session_key'), $newcollection->toArray());
 		
 		$session = collect(session()->get(config('music-store.cart.session_key')));
@@ -110,7 +108,6 @@ class StoreManagerController extends Controller
      */
     public function store(AlbumCreateRequest $request, UploadsManager $manager)
     {   	
-    	dd($request);
     	$image_name = $manager->uploadFile($request->file('image'));
 
     	$album = $this->albums->create([

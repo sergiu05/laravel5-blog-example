@@ -38,14 +38,11 @@ class ShoppingCartController extends Controller
      */
     public function index()
     {
-        //Cart::emptyCart();
-        //Cart::addToCart(4, 5);
-        //Cart::addToCart(6, 2);
         $cartTotal = 0;
 
         $cartItems = Cart::getCartItems()->map(function($item, $key) use (&$cartTotal) {
             $album = $this->albums->findById($item['album_id']);
-            //dd($album);
+            
             $item['album_name'] = $album->title;
             $item['artist_name'] = $album->artist->name;
             $item['price'] = $album->price;

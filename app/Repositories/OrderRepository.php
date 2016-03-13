@@ -4,12 +4,18 @@ namespace Unicorn\Repositories;
 
 use Unicorn\Order;
 use Unicorn\Orderdetails;
+use Unicorn\User;
 use Auth;
 use Cart;
 use Unicorn\Album;
 
 class OrderRepository {
-	
+
+	/**
+	 * Process the cart content
+	 *
+	 * @return void
+	 */	
 	public function process() {
 		
 		$cartTotal = 0;
@@ -40,6 +46,17 @@ class OrderRepository {
         	$orderDetail->order()->associate($order);
         	$orderDetail->save();
         });
+	}
+
+	/**
+	 * Get all the orders for a user
+	 *
+	 * @param Unicorn\User $user
+	 * @return Collection of Order instances
+	 */
+	public function getOrdersFor(User $user) {
+
+		return Order::with('items')->where('user_id', $user->id)->get();
 	}
 
 }

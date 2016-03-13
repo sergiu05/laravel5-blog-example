@@ -35,7 +35,7 @@ class Album extends Model
      * Set the album's price in cents
      *
      * @param float number
-     * @return int
+     * @return void
      */
     public function setPriceAttribute($value) {
 

@@ -21,6 +21,30 @@ class Orderdetails extends Model
     protected $table = 'Orderdetails';
 
     /**
+     * Set the price in cents
+     *
+     * @param float $price
+     * @return void
+     */
+    public function setPriceAttribute($price) {
+
+        $this->attributes['price'] = round($price, 2) * 100;
+
+    }
+
+    /**
+     * Get the price in dollars
+     *
+     * @param int $value
+     * @return float
+     */
+    public function getPriceAttribute($value) {
+
+        return round($value / 100, 2);
+
+    }
+
+    /**
      * The order this orderitem belongs to
      *
      * @return 

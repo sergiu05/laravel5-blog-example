@@ -67,7 +67,7 @@
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
                       <ul class="dropdown-menu">
-                        <li><a href="#">My Profile</a></li>
+                        <li><a href="{{ route('my-orders') }}">My Orders</a></li>
                         @if (Auth::user()->isAdmin())
                         <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
                         @endif

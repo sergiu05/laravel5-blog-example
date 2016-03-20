@@ -8,6 +8,7 @@ use Unicorn\Http\Controllers\Controller;
 
 use Unicorn\Repositories\AlbumRepository;
 use Unicorn\Repositories\ArtistRepository;
+use Unicorn\Repositories\UserRepository;
 use Unicorn\Http\Requests\AlbumCreateRequest;
 
 use Unicorn\Services\UploadsManager;
@@ -32,16 +33,24 @@ class StoreManagerController extends Controller
 	 */
     protected $artists;
 
+    /**
+     * The users repository instance
+     *
+     * @var UserRepository
+     */
+    protected $users;
+
 	/**
 	 * Create a new controller instance
 	 *
 	 * @param AlbumRepository $albums
 	 * @return void
 	 */
-	public function __construct(AlbumRepository $albums, ArtistRepository $artists) {
+	public function __construct(AlbumRepository $albums, ArtistRepository $artists, UserRepository $users) {
 
 		$this->albums = $albums;
 		$this->artists = $artists;
+        $this->users = $users;
 
 	}
 
@@ -153,5 +162,35 @@ class StoreManagerController extends Controller
     public function destroy($id)
     {
         return $this->albums->delete($id);        
+    }
+
+    /**
+     * Fetch all users     
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getUsers() {
+
+        $users = $this->users->all();
+        
+        return view('backend.users.index', compact('users'));
+    }
+
+    /**
+     * Change user status (admin or non-admin)
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function updateUserStatus(Request $request) {
+
+        $this->validate($request, [
+            'user_id' => 'required|exists:users,id',
+            'is_admin' => 'required|boolean'
+        ]);
+
+        $this->users->updateStatusFor($request->input('user_id'), $request->input('is_admin'));
+
+        return response()->json(['success' => true]);
     }
 }

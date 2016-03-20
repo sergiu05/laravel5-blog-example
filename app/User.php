@@ -50,6 +50,17 @@ class User extends Model implements AuthenticatableContract,
     }
 
     /**
+     * Is the current user non-admin
+     *
+     * @return boolean
+     */
+    public function isNotAdmin() {
+
+        return (1 != $this->is_admin);
+
+    }
+
+    /**
      * Get the user's orders
      *
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo

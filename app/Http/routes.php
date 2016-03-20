@@ -49,6 +49,10 @@ Route::group([
 	
 	#admin artists routes
 	Route::resource('artists', 'StoreManagerArtistController');
+
+	#admin users routes
+	Route::get('/users', 'StoreManagerController@getUsers')->name('users');
+	Route::post('/update-user-status', 'StoreManagerController@updateUserStatus')->name('update-user-status');
 });
 
 # authentication routes

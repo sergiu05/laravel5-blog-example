@@ -14,7 +14,7 @@ class OrderRepository {
 	/**
 	 * Process the cart content
 	 *
-	 * @return void
+	 * @return int Total order value
 	 */	
 	public function process() {
 		
@@ -46,6 +46,8 @@ class OrderRepository {
         	$orderDetail->order()->associate($order);
         	$orderDetail->save();
         });
+
+        return $cartTotal;
 	}
 
 	/**

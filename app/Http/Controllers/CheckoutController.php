@@ -8,6 +8,9 @@ use Unicorn\Http\Requests;
 use Unicorn\Http\Controllers\Controller;
 use Unicorn\Repositories\OrderRepository;
 use Cart;
+use Auth;
+use Unicorn\Jobs\SendWelcomeEmail;
+
 
 class CheckoutController extends Controller
 {
@@ -38,8 +41,12 @@ class CheckoutController extends Controller
     public function process(Request $request)
     {
         try {
-            $this->orders->process();
+            $value = $this->orders->process();
             Cart::emptyCart();
+
+            $user = Auth::user();
+
+            $this->dispatch(new SendWelcomeEmail($user, $value));
             return response()->json(['status' => 1]);
         } catch(\Exception $e) {
             abort(500, $e->getMessage());
